@@ -1,0 +1,291 @@
+{
+    "title": "迷失的记忆",
+    "version": "1.0.0",
+    "author": "CakeGame Studio",
+    "description": "一个关于寻找自我的文字冒险游戏",
+    "start_scene": "awakening",
+    "scenes": [
+        {
+            "id": "awakening",
+            "name": "苏醒",
+            "description": "你在一片黑暗中醒来...",
+            "first_dialog": "start",
+            "dialogs": ["start", "look_around", "find_door", "door_choice"],
+            "unlocked": true,
+            "background": "dark_room.png"
+        },
+        {
+            "id": "corridor",
+            "name": "走廊",
+            "description": "一条幽暗的走廊",
+            "first_dialog": "corridor_start",
+            "dialogs": ["corridor_start", "find_note", "read_note", "continue_forward"],
+            "unlocked": false
+        },
+        {
+            "id": "garden",
+            "name": "花园",
+            "description": "一个美丽的花园",
+            "first_dialog": "garden_start",
+            "dialogs": ["garden_start", "meet_alice", "talk_alice"],
+            "unlocked": false
+        }
+    ],
+    "dialogs": [
+        {
+            "id": "start",
+            "speaker": "",
+            "text": "你缓缓睁开眼睛，发现自己躺在一个陌生的房间里。四周一片昏暗，只有微弱的光线从窗户透进来。",
+            "next": "look_around"
+        },
+        {
+            "id": "look_around",
+            "speaker": "你",
+            "text": "这是哪里？我的头好痛...什么都想不起来。",
+            "next": "find_door"
+        },
+        {
+            "id": "find_door",
+            "speaker": "",
+            "text": "你环顾四周，发现房间的一侧有一扇木门，另一侧有一个破旧的柜子。",
+            "next": "door_choice"
+        },
+        {
+            "id": "door_choice",
+            "speaker": "",
+            "text": "你要怎么做？",
+            "next": "",
+            "choices": [
+                {
+                    "text": "尝试打开木门",
+                    "target": "corridor_start",
+                    "effects": [
+                        {"effect_type": "set_flag", "target": "opened_door", "value": ""},
+                        {"effect_type": "unlock_scene", "target": "corridor", "value": ""}
+                    ]
+                },
+                {
+                    "text": "先查看柜子",
+                    "target": "check_cabinet",
+                    "effects": [
+                        {"effect_type": "set_flag", "target": "checked_cabinet", "value": ""}
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "check_cabinet",
+            "speaker": "",
+            "text": "你打开柜子，发现里面有一把生锈的钥匙和一张泛黄的照片。",
+            "next": "cabinet_items",
+            "effects": [
+                {"effect_type": "add_item", "target": "rusty_key", "value": "1"},
+                {"effect_type": "add_item", "target": "old_photo", "value": "1"}
+            ]
+        },
+        {
+            "id": "cabinet_items",
+            "speaker": "你",
+            "text": "这张照片...上面的人是我吗？为什么我完全不记得了？",
+            "next": "door_choice"
+        },
+        {
+            "id": "corridor_start",
+            "speaker": "",
+            "text": "你推开门，眼前是一条长长的走廊。墙壁上的火把发出摇曳的光芒。",
+            "next": "find_note"
+        },
+        {
+            "id": "find_note",
+            "speaker": "",
+            "text": "走廊的地上有一张纸条。",
+            "next": "note_choice"
+        },
+        {
+            "id": "note_choice",
+            "speaker": "",
+            "text": "",
+            "next": "",
+            "choices": [
+                {
+                    "text": "捡起来看",
+                    "target": "read_note",
+                    "conditions": [
+                        {"condition_type": "item", "target": "rusty_key", "value": "1", "op": ">="}
+                    ]
+                },
+                {
+                    "text": "继续往前走",
+                    "target": "continue_forward"
+                }
+            ]
+        },
+        {
+            "id": "read_note",
+            "speaker": "",
+            "text": "纸条上写着：「记住，你不是一个人。去花园吧，那里有人在等你。」",
+            "next": "continue_forward",
+            "effects": [
+                {"effect_type": "set_flag", "target": "read_note", "value": ""},
+                {"effect_type": "unlock_scene", "target": "garden", "value": ""}
+            ]
+        },
+        {
+            "id": "continue_forward",
+            "speaker": "",
+            "text": "你继续沿着走廊前行，发现尽头有两扇门。",
+            "next": "final_choice"
+        },
+        {
+            "id": "final_choice",
+            "speaker": "",
+            "text": "一扇门上写着「出口」，另一扇门上写着「花园」。",
+            "next": "",
+            "choices": [
+                {
+                    "text": "走向出口",
+                    "target": "ending_exit"
+                },
+                {
+                    "text": "走向花园",
+                    "target": "garden_start",
+                    "conditions": [
+                        {"condition_type": "flag", "target": "read_note", "value": "", "op": "set"}
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "ending_exit",
+            "speaker": "",
+            "text": "你推开了出口的门，刺眼的阳光照射进来。你走出了这个神秘的地方，但心中仍然充满了疑问...",
+            "next": "",
+            "effects": [
+                {"effect_type": "set_flag", "target": "ending_normal", "value": ""}
+            ]
+        },
+        {
+            "id": "garden_start",
+            "speaker": "",
+            "text": "你推开花园的门，眼前豁然开朗。五颜六色的花朵在微风中摇曳，空气中弥漫着淡淡的花香。",
+            "next": "meet_alice"
+        },
+        {
+            "id": "meet_alice",
+            "speaker": "",
+            "text": "在花园的中央，你看到一个少女正坐在长椅上，似乎在等待什么人。",
+            "next": "alice_greeting"
+        },
+        {
+            "id": "alice_greeting",
+            "speaker": "神秘少女",
+            "text": "你终于来了。我等你很久了。",
+            "next": "alice_talk_choice",
+            "effects": [
+                {"effect_type": "add_affinity", "target": "alice", "value": "5"}
+            ]
+        },
+        {
+            "id": "alice_talk_choice",
+            "speaker": "",
+            "text": "",
+            "next": "",
+            "choices": [
+                {
+                    "text": "你是谁？",
+                    "target": "alice_explain"
+                },
+                {
+                    "text": "你认识我吗？",
+                    "target": "alice_knows"
+                }
+            ]
+        },
+        {
+            "id": "alice_explain",
+            "speaker": "Alice",
+            "text": "我叫Alice。我是来帮助你找回记忆的。这个地方...其实是一个迷宫，只有找到真相才能离开。",
+            "next": "alice_offer",
+            "effects": [
+                {"effect_type": "add_affinity", "target": "alice", "value": "10"}
+            ]
+        },
+        {
+            "id": "alice_knows",
+            "speaker": "Alice",
+            "text": "是的，我认识你。但现在的你已经不记得了。别担心，我会帮你想起来的。",
+            "next": "alice_offer",
+            "effects": [
+                {"effect_type": "add_affinity", "target": "alice", "value": "15"}
+            ]
+        },
+        {
+            "id": "alice_offer",
+            "speaker": "Alice",
+            "text": "来，握住我的手。我会带你找回失去的记忆。",
+            "next": "ending_good"
+        },
+        {
+            "id": "ending_good",
+            "speaker": "",
+            "text": "你握住了Alice的手，一瞬间，无数的记忆涌上心头。你想起了自己的名字，想起了过去的一切...\n\n【完美结局 - 记忆恢复】\n\n好感度：{}",
+            "next": "",
+            "effects": [
+                {"effect_type": "set_flag", "target": "ending_good", "value": ""}
+            ]
+        }
+    ],
+    "items": [
+        {
+            "id": "rusty_key",
+            "name": "生锈的钥匙",
+            "description": "一把看起来很久没用过的钥匙",
+            "max_count": 1,
+            "usable": true,
+            "icon": "🔑"
+        },
+        {
+            "id": "old_photo",
+            "name": "泛黄的照片",
+            "description": "一张褪色的照片，上面似乎是你",
+            "max_count": 1,
+            "usable": false,
+            "icon": "📷"
+        }
+    ],
+    "characters": [
+        {
+            "id": "alice",
+            "name": "Alice",
+            "title": "神秘少女",
+            "description": "一个声称认识你的少女",
+            "portrait": "alice.png",
+            "default_affinity": 0
+        }
+    ],
+    "variables": [
+        {
+            "id": "sanity",
+            "name": "理智值",
+            "default_value": "100",
+            "description": "代表你的精神状态"
+        }
+    ],
+    "flags": [
+        {
+            "id": "opened_door",
+            "name": "打开门",
+            "description": "打开了房间的门"
+        },
+        {
+            "id": "checked_cabinet",
+            "name": "查看柜子",
+            "description": "查看了房间的柜子"
+        },
+        {
+            "id": "read_note",
+            "name": "读纸条",
+            "description": "读了走廊上的纸条"
+        }
+    ]
+}
