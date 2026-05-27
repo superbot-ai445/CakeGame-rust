@@ -27,11 +27,11 @@ jobs:
             artifact: cakegame.dll
             asset_name: cakegame-windows-amd64.dll
           - target: x86_64-apple-darwin
-            os: macos-latest
+            os: macos-13
             artifact: libcakegame.dylib
             asset_name: libcakegame-macos-amd64.dylib
           - target: aarch64-apple-darwin
-            os: macos-latest
+            os: macos-14
             artifact: libcakegame.dylib
             asset_name: libcakegame-macos-arm64.dylib
 
@@ -48,18 +48,15 @@ jobs:
 
     - name: Rename artifact (Linux)
       if: runner.os == 'Linux'
-      run: |
-        cp target/${{ matrix.target }}/release/libcakegame.so ${{ matrix.artifact }}
+      run: cp target/${{ matrix.target }}/release/libcakegame.so ${{ matrix.artifact }}
 
     - name: Rename artifact (Windows)
       if: runner.os == 'Windows'
-      run: |
-        cp target/${{ matrix.target }}/release/cakegame.dll ${{ matrix.artifact }}
+      run: cp target/${{ matrix.target }}/release/cakegame.dll ${{ matrix.artifact }}
 
     - name: Rename artifact (macOS)
       if: runner.os == 'macOS'
-      run: |
-        cp target/${{ matrix.target }}/release/libcakegame.dylib ${{ matrix.artifact }}
+      run: cp target/${{ matrix.target }}/release/libcakegame.dylib ${{ matrix.artifact }}
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
@@ -85,17 +82,26 @@ jobs:
       contents: write
 
     steps:
-    - name: Download artifacts
+    - name: Download all artifacts
       uses: actions/download-artifact@v4
       with:
         path: artifacts
 
+    - name: List artifacts
+      run: find artifacts -type f
+
+    - name: Prepare release files
+      run: |
+        mkdir -p release
+        cp artifacts/libcakegame-linux-amd64.so/libcakegame.so release/libcakegame-linux-amd64.so
+        cp artifacts/cakegame-windows-amd64.dll/cakegame.dll release/cakegame-windows-amd64.dll
+        cp artifacts/libcakegame-macos-amd64.dylib/libcakegame.dylib release/libcakegame-macos-amd64.dylib
+        cp artifacts/libcakegame-macos-arm64.dylib/libcakegame.dylib release/libcakegame-macos-arm64.dylib
+
     - name: Create Release
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
-        files: artifacts/**/*
+        files: release/*
         generate_release_notes: true
         draft: false
         prerelease: false
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
