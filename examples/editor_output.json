@@ -1,0 +1,187 @@
+{
+  "title": "我的第一个游戏",
+  "version": "1.0.0",
+  "author": "开发者",
+  "description": "",
+  "scenes": [
+    {
+      "id": "s1",
+      "name": "第一章",
+      "description": "故事开始的地方",
+      "dialogs": [],
+      "first_dialog": "",
+      "unlocked": true,
+      "background": "",
+      "music": ""
+    },
+    {
+      "id": "s2",
+      "name": "第二章",
+      "description": "冒险继续",
+      "dialogs": [],
+      "first_dialog": "",
+      "unlocked": true,
+      "background": "",
+      "music": ""
+    }
+  ],
+  "dialogs": [
+    {
+      "id": "d1",
+      "speaker": "",
+      "text": "你醒来发现自己在一个陌生的地方。",
+      "next": "d2",
+      "choices": [],
+      "effects": [],
+      "conditions": [],
+      "speaker_portrait": "",
+      "voice": "",
+      "wait_time": 0.0
+    },
+    {
+      "id": "d2",
+      "speaker": "你",
+      "text": "这是哪里？我什么都不记得了...",
+      "next": "d3",
+      "choices": [],
+      "effects": [],
+      "conditions": [],
+      "speaker_portrait": "",
+      "voice": "",
+      "wait_time": 0.0
+    },
+    {
+      "id": "d3",
+      "speaker": "",
+      "text": "你看到前方有两条路。",
+      "next": "",
+      "choices": [
+        {
+          "text": "走左边的小路",
+          "target": "d4",
+          "conditions": [],
+          "effects": []
+        },
+        {
+          "text": "走右边的大路",
+          "target": "d5",
+          "conditions": [],
+          "effects": []
+        }
+      ],
+      "effects": [],
+      "conditions": [],
+      "speaker_portrait": "",
+      "voice": "",
+      "wait_time": 0.0
+    },
+    {
+      "id": "d4",
+      "speaker": "",
+      "text": "你沿着小路走去，发现了一个宝箱！",
+      "next": "",
+      "choices": [],
+      "effects": [],
+      "conditions": [],
+      "speaker_portrait": "",
+      "voice": "",
+      "wait_time": 0.0
+    },
+    {
+      "id": "d5",
+      "speaker": "",
+      "text": "你沿着大路走去，遇到了一个旅人。",
+      "next": "d6",
+      "choices": [],
+      "effects": [],
+      "conditions": [],
+      "speaker_portrait": "",
+      "voice": "",
+      "wait_time": 0.0
+    },
+    {
+      "id": "d6",
+      "speaker": "旅人",
+      "text": "你好，旅行者！这条路通向城镇。",
+      "next": "",
+      "choices": [],
+      "effects": [],
+      "conditions": [],
+      "speaker_portrait": "",
+      "voice": "",
+      "wait_time": 0.0
+    }
+  ],
+  "items": [
+    {
+      "id": "sword",
+      "name": "铁剑",
+      "description": "一把普通的铁剑",
+      "max_count": 1,
+      "usable": true,
+      "icon": ""
+    },
+    {
+      "id": "potion",
+      "name": "治疗药水",
+      "description": "恢复30点生命值",
+      "max_count": 10,
+      "usable": true,
+      "icon": ""
+    },
+    {
+      "id": "gold",
+      "name": "金币",
+      "description": "通用货币",
+      "max_count": 9999,
+      "usable": false,
+      "icon": ""
+    }
+  ],
+  "characters": [
+    {
+      "id": "traveler",
+      "name": "旅人",
+      "title": "友善的旅行者",
+      "description": "一个看起来很友善的旅人",
+      "portrait": "",
+      "default_affinity": 0
+    },
+    {
+      "id": "merchant",
+      "name": "商人",
+      "title": "旅行商人",
+      "description": "经营各种商品的商人",
+      "portrait": "",
+      "default_affinity": 0
+    }
+  ],
+  "variables": [
+    {
+      "id": "health",
+      "name": "生命值",
+      "default_value": "100",
+      "description": "玩家的生命值"
+    },
+    {
+      "id": "attack",
+      "name": "攻击力",
+      "default_value": "10",
+      "description": "玩家的攻击力"
+    }
+  ],
+  "flags": [
+    {
+      "id": "met_traveler",
+      "name": "遇到旅人",
+      "description": "是否遇到了旅人"
+    },
+    {
+      "id": "got_sword",
+      "name": "获得铁剑",
+      "description": "是否获得了铁剑"
+    }
+  ],
+  "start_scene": "s1",
+  "start_dialog": ""
+}
