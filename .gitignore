@@ -1,9 +1,10 @@
 target/
 __pycache__/
 *.pyc
+*.so
 *.dylib
 *.dll
 *.exe
-.venv/
-.gradio/
-*.sdb
+test_node.yaml
+mihomo_data/
+
