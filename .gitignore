@@ -1,0 +1,9 @@
+target/
+__pycache__/
+*.pyc
+*.dylib
+*.dll
+*.exe
+.venv/
+.gradio/
+*.sdb
