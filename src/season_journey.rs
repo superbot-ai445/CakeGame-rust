@@ -261,9 +261,11 @@ pub fn cmd_view_season_journey(db: &Database, user_id: &str, _args: &str, _msg_t
         ));
     }
 
-    out.push_str("
+    out.push_str(
+        "
 
-💡 使用「征途详情+章节号」查看具体目标");
+💡 使用「征途详情+章节号」查看具体目标",
+    );
     out
 }
 

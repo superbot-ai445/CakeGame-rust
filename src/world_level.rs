@@ -293,13 +293,7 @@ pub fn get_world_bonus(db: &Database) -> (i32, i32) {
 // ==================== 指令实现 ====================
 
 /// 查看世界等级
-pub fn cmd_world_level(
-    db: &Database,
-    user_id: &str,
-    _args: &str,
-    _msg_type: &str,
-    _group: &str,
-) -> String {
+pub fn cmd_world_level(db: &Database, user_id: &str, _args: &str, _msg_type: &str, _group: &str) -> String {
     let prefix = format!("ID：{}\n", user_id);
     let level = update_world_level(db);
     let tier = get_tier_for_level(level);
@@ -317,17 +311,11 @@ pub fn cmd_world_level(
     r.push_str(&format!("{} {} Lv.{}\n", tier.emoji, tier.name, level));
     r.push_str(&format!("{}\n\n", tier.desc));
     r.push_str(&format!("📊 全服平均等级: {:.1}\n", avg));
-    r.push_str(&format!(
-        "🎯 你的等级: Lv.{} {}\n\n",
-        user_level, status
-    ));
+    r.push_str(&format!("🎯 你的等级: Lv.{} {}\n\n", user_level, status));
 
     // 怪物变化
     r.push_str("⚔️ 怪物变化:\n");
-    r.push_str(&format!(
-        "   HP: +{}%  攻击: +{}%\n",
-        tier.modifier.0, tier.modifier.1
-    ));
+    r.push_str(&format!("   HP: +{}%  攻击: +{}%\n", tier.modifier.0, tier.modifier.1));
 
     // 全服加成
     r.push_str(&format!(
@@ -363,13 +351,7 @@ pub fn cmd_world_level(
 }
 
 /// 世界等级详情
-pub fn cmd_world_level_detail(
-    db: &Database,
-    user_id: &str,
-    _args: &str,
-    _msg_type: &str,
-    _group: &str,
-) -> String {
+pub fn cmd_world_level_detail(db: &Database, user_id: &str, _args: &str, _msg_type: &str, _group: &str) -> String {
     let prefix = format!("ID：{}\n", user_id);
     let level = get_current_world_level(db);
 
@@ -378,11 +360,7 @@ pub fn cmd_world_level_detail(
     r.push_str("📋 全部等级阶段:\n\n");
 
     for tier in WORLD_LEVEL_TIERS {
-        let marker = if level >= tier.min_level {
-            "✅"
-        } else {
-            "🔒"
-        };
+        let marker = if level >= tier.min_level { "✅" } else { "🔒" };
         r.push_str(&format!(
             "{} {} Lv.{}+ 「{}」\n",
             marker, tier.emoji, tier.min_level, tier.name
@@ -413,13 +391,7 @@ pub fn cmd_world_level_detail(
 }
 
 /// 世界等级排行
-pub fn cmd_world_level_ranking(
-    db: &Database,
-    user_id: &str,
-    _args: &str,
-    _msg_type: &str,
-    _group: &str,
-) -> String {
+pub fn cmd_world_level_ranking(db: &Database, user_id: &str, _args: &str, _msg_type: &str, _group: &str) -> String {
     let prefix = format!("ID：{}\n", user_id);
     let world_level = get_current_world_level(db);
 
@@ -448,14 +420,7 @@ pub fn cmd_world_level_ranking(
             _ => "  ",
         };
         let marker = if uid == user_id { " ← 你" } else { "" };
-        r.push_str(&format!(
-            "{} #{} Lv.{} {}{}\n",
-            medal,
-            i + 1,
-            level,
-            uid,
-            marker
-        ));
+        r.push_str(&format!("{} #{} Lv.{} {}{}\n", medal, i + 1, level, uid, marker));
         if uid == user_id {
             user_rank = i + 1;
         }
@@ -465,10 +430,7 @@ pub fn cmd_world_level_ranking(
         for (i, (uid, level)) in users.iter().enumerate() {
             if uid == user_id {
                 user_rank = i + 1;
-                r.push_str(&format!(
-                    "\n📍 你的排名: #{} Lv.{}\n",
-                    user_rank, level
-                ));
+                r.push_str(&format!("\n📍 你的排名: #{} Lv.{}\n", user_rank, level));
                 break;
             }
         }
@@ -476,22 +438,13 @@ pub fn cmd_world_level_ranking(
 
     let total = users.len();
     let avg = calc_server_avg_level(db);
-    r.push_str(&format!(
-        "\n📊 全服统计: {}名玩家, 平均等级 {:.1}\n",
-        total, avg
-    ));
+    r.push_str(&format!("\n📊 全服统计: {}名玩家, 平均等级 {:.1}\n", total, avg));
 
     r
 }
 
 /// 世界等级奖励
-pub fn cmd_world_level_reward(
-    db: &Database,
-    user_id: &str,
-    _args: &str,
-    _msg_type: &str,
-    _group: &str,
-) -> String {
+pub fn cmd_world_level_reward(db: &Database, user_id: &str, _args: &str, _msg_type: &str, _group: &str) -> String {
     let prefix = format!("ID：{}\n", user_id);
     let level = get_current_world_level(db);
 
@@ -517,10 +470,7 @@ pub fn cmd_world_level_reward(
             String::new()
         };
 
-        r.push_str(&format!(
-            "Lv.{} - {}{}\n",
-            ms.level, ms.name, progress
-        ));
+        r.push_str(&format!("Lv.{} - {}{}\n", ms.level, ms.name, progress));
         r.push_str(&format!(
             "   {}  💰{}金 💎{}钻 📦{}\n",
             status, ms.reward_gold, ms.reward_diamond, ms.reward_item
@@ -534,13 +484,7 @@ pub fn cmd_world_level_reward(
 }
 
 /// 领取世界等级奖励
-pub fn cmd_claim_world_reward(
-    db: &Database,
-    user_id: &str,
-    args: &str,
-    _msg_type: &str,
-    _group: &str,
-) -> String {
+pub fn cmd_claim_world_reward(db: &Database, user_id: &str, args: &str, _msg_type: &str, _group: &str) -> String {
     let prefix = format!("ID：{}\n", user_id);
     let level = get_current_world_level(db);
 
@@ -578,19 +522,13 @@ pub fn cmd_claim_world_reward(
     let key = format!("wl_milestone_{}", ms.level);
     let claimed = db.global_get("world_level_rewards", &key);
     if claimed == "1" {
-        return format!(
-            "{}\n✅ Lv.{}「{}」奖励已经领取过了！",
-            prefix, ms.level, ms.name
-        );
+        return format!("{}\n✅ Lv.{}「{}」奖励已经领取过了！", prefix, ms.level, ms.name);
     }
 
     // 检查玩家等级
     let user_level: i32 = db.read_basic(user_id, "level").parse().unwrap_or(1);
     if user_level < 10 {
-        return format!(
-            "{}\n❌ 你的等级不足10级，无法领取世界等级奖励。",
-            prefix
-        );
+        return format!("{}\n❌ 你的等级不足10级，无法领取世界等级奖励。", prefix);
     }
 
     // 发放奖励
@@ -607,10 +545,7 @@ pub fn cmd_claim_world_reward(
     db.global_set("world_level_rewards", &key, "1");
 
     let mut r = format!("{}\n", prefix);
-    r.push_str(&format!(
-        "🎉 成功领取 Lv.{}「{}」奖励！\n\n",
-        ms.level, ms.name
-    ));
+    r.push_str(&format!("🎉 成功领取 Lv.{}「{}」奖励！\n\n", ms.level, ms.name));
     r.push_str(&format!("  💰 金币 +{}\n", ms.reward_gold));
     r.push_str(&format!("  💎 钻石 +{}\n", ms.reward_diamond));
     r.push_str(&format!("  📦 道具 +1 [{}]\n", ms.reward_item));
@@ -621,13 +556,7 @@ pub fn cmd_claim_world_reward(
 }
 
 /// 世界等级历史
-pub fn cmd_world_level_history(
-    db: &Database,
-    user_id: &str,
-    _args: &str,
-    _msg_type: &str,
-    _group: &str,
-) -> String {
+pub fn cmd_world_level_history(db: &Database, user_id: &str, _args: &str, _msg_type: &str, _group: &str) -> String {
     let prefix = format!("ID：{}\n", user_id);
     let level = get_current_world_level(db);
     let last_update = db.global_get("world_level", "last_update");
@@ -716,10 +645,7 @@ mod tests {
     fn test_milestone_rewards_positive() {
         for ms in WORLD_MILESTONES {
             assert!(ms.reward_gold > 0, "Gold reward should be positive");
-            assert!(
-                ms.reward_diamond > 0,
-                "Diamond reward should be positive"
-            );
+            assert!(ms.reward_diamond > 0, "Diamond reward should be positive");
         }
     }
 
@@ -771,10 +697,7 @@ mod tests {
     fn test_milestone_names_not_empty() {
         for ms in WORLD_MILESTONES {
             assert!(!ms.name.is_empty(), "Milestone name should not be empty");
-            assert!(
-                !ms.reward_item.is_empty(),
-                "Reward item should not be empty"
-            );
+            assert!(!ms.reward_item.is_empty(), "Reward item should not be empty");
         }
     }
 

@@ -1,3 +1,5 @@
+mod utils;
+pub use utils::*;
 mod abyss;
 mod arena_shop;
 
@@ -414,7 +416,11 @@ pub extern "C" fn cg_init(db_path: *const std::os::raw::c_char) -> i32 {
     // 赛季征途系统指令
     r.register("查看征途", "查看征途", season_journey::cmd_view_season_journey);
     r.register("征途详情", "征途详情+", season_journey::cmd_journey_detail);
-    r.register("领取征途奖励", "领取征途奖励+", season_journey::cmd_claim_journey_reward);
+    r.register(
+        "领取征途奖励",
+        "领取征途奖励+",
+        season_journey::cmd_claim_journey_reward,
+    );
     r.register("征途排行", "征途排行", season_journey::cmd_journey_ranking);
     r.register("征途统计", "征途统计", season_journey::cmd_journey_stats);
 
